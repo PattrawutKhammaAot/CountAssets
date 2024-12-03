@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3585429-4db5-45ea-a73d-5510b184895f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ams_count_offline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ams_count_offline.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/component/charts/barchart_trans.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/component/charts/barchart_trans.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/component/custom_dropdown2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/component/custom_dropdown2.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/component/custom_range_pointer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/component/custom_range_pointer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/export/exportModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/export/exportModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/dashboard_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/dashboard_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/export_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/export_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/gallery_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/gallery_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/import/import_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/import/import_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/import/view_import_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/import/view_import_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/loading_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/main_menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/main_menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/report/card_custom_report.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/report/card_custom_report.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/report/edit_data_count_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/report/edit_data_count_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/report/report_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/report/report_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/setting_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/setting_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/transaction/count_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/transaction/count_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/page/transaction/listplan_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/transaction/listplan_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/count_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/count_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/dashboard_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/dashboard_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/department_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/department_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/export_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/export_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/gallery_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/gallery_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/import_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/import_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/location_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/location_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/report_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/report_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/setting_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/setting_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/sqlite_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/sqlite_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;PattrawutKhammaAot&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PattrawutKhammaAot/ams_count_offline.git&quot;,
+    &quot;accountId&quot;: &quot;111978f3-1870-4164-8fd2-d61873e640b6&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudio2024.2/device-explorer/Medium Phone API 35/_/storage/emulated/0/ams_export/export-20241203-00001.xlsx" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2opz3hzExYyAIhriRUoqa3RfpHZ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/developer/mobile/ams_count_express/assets",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\developer\mobile\ams_count_express\assets" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e3585429-4db5-45ea-a73d-5510b184895f" name="Changes" comment="" />
+      <created>1731581111334</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731581111334</updated>
+    </task>
+    <servers />
+  </component>
+</project>
