@@ -105,7 +105,7 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.contentColorBlue,
+        backgroundColor: Colors.green.shade500,
         iconTheme: IconThemeData(
           color: Colors.white, // Change this to your desired color
         ),
@@ -124,7 +124,7 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
               key: formKeyList[1],
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.contentColorBlue,
+                  color: Colors.green.shade500,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(50),
                     bottomLeft: Radius.circular(50),

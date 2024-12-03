@@ -173,8 +173,10 @@ class _ImportPageState extends State<ImportPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                                "Created date : ${itemPlan[index].createdDate}"),
+                                            Expanded(
+                                              child: Text(
+                                                  "Date : ${itemPlan[index].createdDate}"),
+                                            ),
                                             Text(
                                                 "Qty Assets : ${itemPlan[index].qtyAssets}"),
                                           ],

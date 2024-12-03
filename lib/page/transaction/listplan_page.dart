@@ -215,7 +215,11 @@ class _ListPlanPageState extends State<ListPlanPage> {
                                                         alignment:
                                                             Alignment.center,
                                                         child: Container(
-                                                            width: 150,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.3,
                                                             padding:
                                                                 const EdgeInsets
                                                                     .symmetric(
