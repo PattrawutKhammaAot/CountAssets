@@ -245,6 +245,7 @@ class ImportDB {
 
     for (var json in result) {
       detailReturn.add(ViewImportdetailModel(
+        id: int.tryParse(json['ID'].toString()),
         plan: json[field_plan].toString(),
         asset: json[field_asset].toString(),
         description: json[field_description].toString(),

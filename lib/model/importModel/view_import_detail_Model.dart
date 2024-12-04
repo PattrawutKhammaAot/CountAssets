@@ -11,6 +11,7 @@ String viewImportdetailModelToJson(ViewImportdetailModel data) =>
     json.encode(data.toJson());
 
 class ViewImportdetailModel {
+  int? id;
   String? plan;
   String? asset;
   String? description;
@@ -26,6 +27,7 @@ class ViewImportdetailModel {
   String? userDef4;
 
   ViewImportdetailModel({
+    this.id,
     this.plan,
     this.asset,
     this.description,
@@ -43,6 +45,7 @@ class ViewImportdetailModel {
 
   factory ViewImportdetailModel.fromJson(Map<String, dynamic> json) =>
       ViewImportdetailModel(
+        id: json["id"],
         plan: json["plan"],
         asset: json["asset"],
         description: json["description"],
@@ -59,6 +62,7 @@ class ViewImportdetailModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "plan": plan,
         "asset": asset,
         "description": description,

@@ -87,28 +87,36 @@ class _ViewImportPageState extends State<ViewImportPage> {
                 }
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    color: AppColors.mainTextColor1,
-                    shadowColor: Colors.black,
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        title: Text('Asset : ${itemList[index].asset}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                'Description : ${itemList[index].description}'),
-                            Text('Cost Center : ${itemList[index].costCenter}'),
-                            Text(
-                                'Capitalized On : ${itemList[index].capitalizedOn}'),
-                            Text('Location : ${itemList[index].location}'),
-                            Text('Department : ${itemList[index].department}'),
-                            Text('Asset Owner : ${itemList[index].assetOwner}'),
-                            Text(
-                                'Created Date : ${itemList[index].createdDate}'),
-                          ],
+                  child: GestureDetector(
+                    onTap: () {
+                      print(itemList[index].id);
+                    },
+                    child: Card(
+                      color: AppColors.mainTextColor1,
+                      shadowColor: Colors.black,
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text('Asset : ${itemList[index].asset}'),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  'Description : ${itemList[index].description}'),
+                              Text(
+                                  'Cost Center : ${itemList[index].costCenter}'),
+                              Text(
+                                  'Capitalized On : ${itemList[index].capitalizedOn}'),
+                              Text('Location : ${itemList[index].location}'),
+                              Text(
+                                  'Department : ${itemList[index].department}'),
+                              Text(
+                                  'Asset Owner : ${itemList[index].assetOwner}'),
+                              Text(
+                                  'Created Date : ${itemList[index].createdDate}'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
