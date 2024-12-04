@@ -99,11 +99,13 @@ class _ListPlanPageState extends State<ListPlanPage> {
                                 appLocalization.localizations.listplan_total,
                                 color: AppColors.contentColorBlue,
                                 fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                               Label(
                                 "${itemSum.allitem}",
                                 color: AppColors.contentColorBlue,
                                 fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ],
                           ),

@@ -65,7 +65,7 @@ class CustomRangePoint extends StatelessWidget {
                                     fontFamily: 'Times',
                                     fontSize: 16,
                                     color: colorText,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.bold,
                                     overflow: TextOverflow.clip,
                                   ),
                                 ),
@@ -88,6 +88,7 @@ class CustomRangePoint extends StatelessWidget {
                                 child: Label(
                                   "${text}",
                                   color: colorText ?? Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               )
                             : SizedBox.shrink(),

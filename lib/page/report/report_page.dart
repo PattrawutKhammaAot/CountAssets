@@ -10,6 +10,7 @@ import 'package:ams_express/services/database/quickType.dart';
 import 'package:ams_express/services/database/report_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../services/database/export_db.dart';
 
@@ -18,7 +19,7 @@ class ReportPage extends StatefulWidget {
   State<ReportPage> createState() => _ReportPageState();
 }
 
-class _ReportPageState extends State<ReportPage> {
+class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   List<ViewReportDropdownPlanModel> dropdownPlans = [];
   List<ViewReportListDataModel> dataList = [];
   List<ViewReportListDataModel> _tempItemList = [];
@@ -155,17 +156,18 @@ class _ReportPageState extends State<ReportPage> {
         ),
         actions: [
           valueselected.isNotEmpty
-              ? IconButton(
-                  onPressed: () async {
-                    await ExportDB().ExportAllAssetByPlan(valueselected);
-                  },
-                  icon: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Icon(
-                      Icons.outbox_sharp,
-                      size: 45,
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 60,
+                    child: Transform.rotate(
+                      angle: 3.14159,
+                      child: Lottie.asset('assets/lotties/export.json',
+                          repeat: true, fit: BoxFit.fill),
                     ),
-                  ))
+                  ),
+                )
               : SizedBox.fromSize()
         ],
       ),
