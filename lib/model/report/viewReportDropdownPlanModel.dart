@@ -12,25 +12,25 @@ String viewReportListPlanToJson(ViewReportDropdownPlanModel data) =>
 
 class ViewReportDropdownPlanModel {
   String? plan;
-  int? uncheck;
-  int? check;
+  int? sum_Uncheck;
+  int? sum_Check;
 
   ViewReportDropdownPlanModel({
     this.plan,
-    this.uncheck,
-    this.check,
+    this.sum_Uncheck,
+    this.sum_Check,
   });
 
   factory ViewReportDropdownPlanModel.fromJson(Map<String, dynamic> json) =>
       ViewReportDropdownPlanModel(
         plan: json["Plan"],
-        uncheck: json["Uncheck"],
-        check: json["Check"],
+        sum_Uncheck: json["Uncheck"],
+        sum_Check: json["Check"],
       );
 
   Map<String, dynamic> toJson() => {
         "Plan": plan,
-        "Uncheck": uncheck,
-        "Check": check,
+        "Uncheck": sum_Uncheck,
+        "Check": sum_Check,
       };
 }

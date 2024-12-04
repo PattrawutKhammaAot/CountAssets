@@ -22,6 +22,7 @@ class ListPlanPage extends StatefulWidget {
 class _ListPlanPageState extends State<ListPlanPage> {
   ViewSumStatusModel itemSum = ViewSumStatusModel();
   List<ViewListCountModel> itemPlan = [];
+
   @override
   void initState() {
     ImportDB().getSummaryViewOnSelectPlan().then((value) {

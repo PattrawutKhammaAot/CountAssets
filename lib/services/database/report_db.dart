@@ -33,8 +33,8 @@ class ReportDB {
 
       planReturn.add(ViewReportDropdownPlanModel(
         plan: plan.toString(),
-        uncheck: totalUncheck,
-        check: totalCheck,
+        sum_Uncheck: totalUncheck,
+        sum_Check: totalCheck,
       ));
     }
 

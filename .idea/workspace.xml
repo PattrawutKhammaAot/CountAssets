@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e3585429-4db5-45ea-a73d-5510b184895f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/component/custom_range_pointer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/component/custom_range_pointer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/l10n/app_en.arb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/l10n/app_en.arb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/l10n/app_th.arb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/l10n/app_th.arb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/report/viewReportDropdownPlanModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/report/viewReportDropdownPlanModel.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/page/report/report_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/report/report_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/page/transaction/listplan_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/page/transaction/listplan_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/database/report_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/database/report_db.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +65,7 @@
     "git-widget-placeholder": "main",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/developer/mobile/AMS_DEMO",
+    "last_opened_file_path": "D:/developer/mobile/ams_count_express",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",

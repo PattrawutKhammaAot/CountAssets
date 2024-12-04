@@ -32,7 +32,7 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   int currentPage = 0;
   int pageSize = 50;
   bool isRefreshing = false;
-  String currentStatus = '';
+  String valueViewButtonStatus = '';
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
     List<ViewReportListDataModel> newItems = [];
     currentPage = 0;
     pageSize = 50;
-    currentStatus = value;
+    valueViewButtonStatus = value;
 
     if (value == StatusCheck.status_checked) {
       newItems = await ReportDB().getAssetsByPlanOnlyChecked(
@@ -102,13 +102,13 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
     });
 
     List<ViewReportListDataModel> newItems = [];
-    if (currentStatus == StatusCheck.status_checked) {
+    if (valueViewButtonStatus == StatusCheck.status_checked) {
       newItems = await ReportDB().getAssetsByPlanOnlyChecked(
         value,
         limit: pageSize,
         offset: currentPage * pageSize,
       );
-    } else if (currentStatus == StatusCheck.status_uncheck) {
+    } else if (valueViewButtonStatus == StatusCheck.status_uncheck) {
       newItems = await ReportDB().getAssetsByPlanOnlyUnChecked(
         value,
         limit: pageSize,
@@ -158,13 +158,18 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
           valueselected.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(right: 20),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 60,
-                    child: Transform.rotate(
-                      angle: 3.14159,
-                      child: Lottie.asset('assets/lotties/export.json',
-                          repeat: true, fit: BoxFit.fill),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await ExportDB().ExportAllAssetByPlan(valueselected);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 60,
+                      child: Transform.rotate(
+                        angle: 3.14159,
+                        child: Lottie.asset('assets/lotties/export.json',
+                            repeat: true, fit: BoxFit.fill),
+                      ),
                     ),
                   ),
                 )
@@ -185,18 +190,18 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
               _buildDropdown(onChanged: (value) async {
                 currentPage = 0;
                 pageSize = 50;
-                currentStatus = '';
+                valueViewButtonStatus = '';
 
                 valueselected = value;
                 uncheck.text = dropdownPlans
                     .where((element) => element.plan == valueselected)
                     .first
-                    .uncheck
+                    .sum_Uncheck
                     .toString();
                 checked.text = dropdownPlans
                     .where((element) => element.plan == valueselected)
                     .first
-                    .check
+                    .sum_Check
                     .toString();
 
                 dataList.clear();
