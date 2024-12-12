@@ -82,7 +82,19 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(top: 30),
               width: MediaQuery.sizeOf(context).width,
               decoration: BoxDecoration(
-                color: Colors.green.shade500,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.green.shade900,
+                    Colors.green.shade700,
+                    Colors.green.shade500,
+                    Colors.green.shade300,
+                    Colors.greenAccent.shade200,
+                    Colors.lightGreenAccent.shade100,
+                  ],
+                  stops: [0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
+                ),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
