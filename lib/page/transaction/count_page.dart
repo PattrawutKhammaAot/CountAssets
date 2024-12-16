@@ -78,6 +78,7 @@ class _CountPageState extends State<CountPage> {
 
   Future onChangeValue(bool isTakeBarcode) async {
     ResponseCountModel item = ResponseCountModel();
+    selectedStatus = 'ปกติ';
     if (isTakeBarcode) {
       item = await CountDB().readQrCodeAndBarcode(
         context,
@@ -267,6 +268,8 @@ class _CountPageState extends State<CountPage> {
                         ),
                         Expanded(
                             child: Custominput(
+                              contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 0),
                                 focusNode: _capDateFocus,
                                 labelText: "Cap Date",
                                 controller: capDateController,

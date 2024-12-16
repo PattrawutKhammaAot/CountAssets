@@ -11,6 +11,7 @@ class Custominput extends StatelessWidget {
     this.readOnly,
     this.suffix,
     this.hintText,
+    this.contentPadding
   });
 
   TextEditingController? controller;
@@ -21,6 +22,7 @@ class Custominput extends StatelessWidget {
   bool? readOnly;
   Widget? suffix;
   String? hintText;
+  EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,6 +36,7 @@ class Custominput extends StatelessWidget {
             : true,
         controller: controller,
         decoration: InputDecoration(
+          contentPadding: contentPadding,
           suffixIcon: suffix,
           hintText: hintText,
           border: OutlineInputBorder(),
