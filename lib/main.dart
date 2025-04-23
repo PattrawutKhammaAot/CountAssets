@@ -20,9 +20,7 @@ final appLocalization = LocalizationService();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Permission.manageExternalStorage.request();
-  await Permission.storage.request();
-  await Permission.camera.request();
-  await appDb.initializeDatabase();
+
   runApp(
     MultiProvider(
       providers: [

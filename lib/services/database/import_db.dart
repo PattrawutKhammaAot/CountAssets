@@ -190,6 +190,108 @@ class ImportDB {
     await batch.commit(noResult: true);
   }
 
+  // /// Exports an Excel template with the required column structure for imports
+  // Future<String?> exportExcelTemplate() async {
+  //   try {
+  //     EasyLoading.show(
+  //       status: appLocalization.localizations.generating_template,
+  //       maskType: EasyLoadingMaskType.black,
+  //     );
+
+  //     // Create a new Excel document
+  //     final excel = Excel.createExcel();
+  //     final Sheet sheet = excel['Import Template'];
+
+  //     // Define header columns
+  //     final List<String> headers = [
+  //       'Asset Number', // Asset
+  //       'Description', // Description
+  //       'Cost Center', // Cost Center
+  //       'Capitalized Date', // Capitalized_on
+  //       'Location', // Location
+  //       'Department', // Department
+  //       'Asset Owner', // Asset_Owner
+  //       'User Defined 1', // User_def_1
+  //       'User Defined 2', // User_def_2
+  //     ];
+
+  //     // Style for header row
+  //     final CellStyle headerStyle = CellStyle(
+  //       bold: true,
+  //       backgroundColorHex: '#4CAF50', // Green background
+  //       fontColorHex: '#FFFFFF', // White text
+  //       horizontalAlign: HorizontalAlign.Center,
+  //     );
+
+  //     // Add headers with style
+  //     for (int i = 0; i < headers.length; i++) {
+  //       final cell =
+  //           sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0));
+  //       cell.value = TextCellValue(headers[i]);
+  //       cell.cellStyle = headerStyle;
+  //     }
+
+  //     // Add a sample data row as example
+  //     final List<String> sampleData = [
+  //       'A12345', // Asset
+  //       'Computer Desktop', // Description
+  //       'CC001', // Cost Center
+  //       '01-01-2023', // Capitalized_on
+  //       'Building A', // Location
+  //       'IT Department', // Department
+  //       'John Doe', // Asset_Owner
+  //       'Brand: Dell', // User_def_1
+  //       'Model: XPS', // User_def_2
+  //     ];
+
+  //     for (int i = 0; i < sampleData.length; i++) {
+  //       sheet
+  //           .cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 1))
+  //           .value = TextCellValue(sampleData[i]);
+  //     }
+
+  //     // Adjust column widths for better visibility
+  //     for (int i = 0; i < headers.length; i++) {
+  //       sheet.setColWidth(i, 20.0);
+  //     }
+
+  //     // Create the directory if it doesn't exist
+  //     final directory = Directory('/storage/emulated/0/Download/AMSExpress');
+  //     if (!await directory.exists()) {
+  //       await directory.create(recursive: true);
+  //     }
+
+  //     // Generate a filename with current timestamp
+  //     final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+  //     final filePath = '${directory.path}/AMSExpress_Template_$timestamp.xlsx';
+
+  //     // Save the Excel file
+  //     final List<int>? fileBytes = excel.encode();
+  //     if (fileBytes != null) {
+  //       File(filePath)
+  //         ..createSync(recursive: true)
+  //         ..writeAsBytesSync(fileBytes);
+
+  //       EasyLoading.dismiss();
+  //       EasyLoading.showSuccess(
+  //         '${appLocalization.localizations.template_saved_to}: $filePath',
+  //         duration: Duration(seconds: 3),
+  //       );
+
+  //       return filePath;
+  //     } else {
+  //       throw Exception('Failed to encode Excel file');
+  //     }
+  //   } catch (e, s) {
+  //     print('Error exporting template: $e');
+  //     print(s);
+  //     EasyLoading.showError('${appLocalization.localizations.error}: $e');
+  //     return null;
+  //   } finally {
+  //     EasyLoading.dismiss();
+  //   }
+  // }
+
   // Function to count assets for a specific plan
   Future<int> countAssetsForPlan(String plan) async {
     final db = await appDb.database;
