@@ -162,7 +162,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                 ),
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  'AMS Express',
+                  'Assets Count',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
