@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:ams_express/component/custombutton.dart';
 import 'package:ams_express/model/report/viewReportEditModel.dart';
 import 'package:ams_express/services/database/quickType.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -10,7 +9,6 @@ import '../../component/custom_alertdialog.dart';
 import '../../component/custom_botToast.dart';
 import '../../component/custom_camera.dart';
 import '../../component/textformfield/custom_input.dart';
-import '../../extension/color_extension.dart';
 import '../../main.dart';
 import '../../model/count/countModelEvent.dart';
 import '../../services/database/count_db.dart';
@@ -52,6 +50,15 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
   FocusNode _capDateFocus = FocusNode();
   FocusNode _remarkFocus = FocusNode();
   ViewReportEditModel itemModel = ViewReportEditModel();
+
+  // Modern Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3);
+  final Color secondaryColor = Color(0xFF64B5F6);
+  final Color accentColor = Color(0xFF00BCD4);
+  final Color cardColor = Colors.white;
+  final Color greenColor = Color(0xFF4CAF50);
+  final Color redColor = Color(0xFFEF5350);
+
   @override
   void initState() {
     setValue();
@@ -104,17 +111,47 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 21, 101, 192),
-        iconTheme: IconThemeData(
-          color: Colors.white, // Change this to your desired color
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.edit_document,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Edit Count Plan : ${plan ?? ""}',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ],
         ),
-        title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Count Plan : ${plan}',
-              style: TextStyle(color: Colors.white),
-            )),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryColor, secondaryColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -124,20 +161,31 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
               key: formKeyList[1],
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 21, 101, 192),
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(50),
-                    bottomLeft: Radius.circular(50),
+                  gradient: LinearGradient(
+                    colors: [primaryColor, secondaryColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryColor.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       dropdownLocation(validator: (value) {
                         return null;
                       }),
-                      SizedBox(height: 10),
+                      SizedBox(height: 15),
                       dropdownDepartment(validator: (value) {
                         return null;
                       }),
@@ -148,10 +196,14 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
               ),
             ),
             Card(
-              shadowColor: Colors.black,
-              elevation: 10,
+              margin: EdgeInsets.all(16),
+              elevation: 8,
+              shadowColor: primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
@@ -290,27 +342,65 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
       {String? Function(String?)? validator, FocusNode? focus}) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField2(
         validator: validator,
         focusNode: focus,
         autofocus: true,
         isExpanded: true,
-        hint: Text(
-          "Select Location",
-          textAlign: TextAlign.center,
+        hint: Row(
+          children: [
+            Icon(Icons.location_on_rounded,
+                color: Colors.grey.shade400, size: 20),
+            SizedBox(width: 8),
+            Text(
+              "Select Location",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         decoration: InputDecoration(
           enabled: false,
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
           ),
+          filled: true,
+          fillColor: Colors.grey.shade100,
         ),
         items: [
           DropdownMenuItem<String>(
             value: _selectedLocation,
-            child: Text(_selectedLocation ?? "--- No data ---"),
+            child: Row(
+              children: [
+                Icon(Icons.location_on_rounded,
+                    color: Colors.grey.shade400, size: 18),
+                SizedBox(width: 8),
+                Text(
+                  _selectedLocation ?? "--- No data ---",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
         value: _selectedLocation,
@@ -329,17 +419,19 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
         buttonStyleData: const ButtonStyleData(
           padding: EdgeInsets.only(right: 8),
         ),
-        iconStyleData: const IconStyleData(
+        iconStyleData: IconStyleData(
           icon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
+            Icons.arrow_drop_down_rounded,
+            color: Colors.grey.shade400,
           ),
-          iconSize: 24,
+          iconSize: 28,
         ),
         dropdownStyleData: DropdownStyleData(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
           ),
+          elevation: 8,
         ),
         menuItemStyleData: const MenuItemStyleData(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -352,27 +444,64 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
       {String? Function(String?)? validator, FocusNode? focus}) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField2(
         focusNode: focus,
         validator: validator,
         autofocus: true,
         isExpanded: true,
-        hint: Text(
-          "Select Department",
-          textAlign: TextAlign.center,
+        hint: Row(
+          children: [
+            Icon(Icons.business_rounded, color: Colors.grey.shade400, size: 20),
+            SizedBox(width: 8),
+            Text(
+              "Select Department",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         decoration: InputDecoration(
           enabled: false,
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
           ),
+          filled: true,
+          fillColor: Colors.grey.shade100,
         ),
         items: [
           DropdownMenuItem<String>(
             value: _selectedDepartment,
-            child: Text(_selectedDepartment ?? "--- No data ---"),
+            child: Row(
+              children: [
+                Icon(Icons.business_rounded,
+                    color: Colors.grey.shade400, size: 18),
+                SizedBox(width: 8),
+                Text(
+                  _selectedDepartment ?? "--- No data ---",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
         value: _selectedDepartment,
@@ -390,17 +519,19 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
         buttonStyleData: const ButtonStyleData(
           padding: EdgeInsets.only(right: 8),
         ),
-        iconStyleData: const IconStyleData(
+        iconStyleData: IconStyleData(
           icon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
+            Icons.arrow_drop_down_rounded,
+            color: Colors.grey.shade400,
           ),
-          iconSize: 24,
+          iconSize: 28,
         ),
         dropdownStyleData: DropdownStyleData(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
           ),
+          elevation: 8,
         ),
         menuItemStyleData: const MenuItemStyleData(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -424,24 +555,64 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
       focusNode: focus,
       isExpanded: true,
       decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          label: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Select Status"),
-          )),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide:
+              BorderSide(color: primaryColor.withOpacity(0.3), width: 1.5),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: primaryColor, width: 2),
+        ),
+        label: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.info_outline_rounded, color: primaryColor, size: 18),
+            SizedBox(width: 8),
+            Text(
+              "Select Status",
+              style: TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
       items: itemStatus
           .map((String item) => DropdownMenuItem<String>(
                 value: item,
-                child: Text(
-                  " ${item}",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: item == 'ปกติ'
+                            ? greenColor
+                            : item == 'ทรัพย์สินสุญหาย'
+                                ? redColor
+                                : Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ))
           .toList(),
@@ -455,17 +626,19 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
-      iconStyleData: const IconStyleData(
+      iconStyleData: IconStyleData(
         icon: Icon(
-          Icons.arrow_drop_down,
-          color: Colors.black45,
+          Icons.arrow_drop_down_rounded,
+          color: primaryColor,
         ),
-        iconSize: 24,
+        iconSize: 28,
       ),
       dropdownStyleData: DropdownStyleData(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
         ),
+        elevation: 8,
       ),
       menuItemStyleData: const MenuItemStyleData(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -478,20 +651,58 @@ class _EditDataCountPageState extends State<EditDataCountPage> {
     dynamic Function()? onCamera,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
           Expanded(
-            child: CustomButton(
-              icon: Icons.save,
-              text: appLocalization.localizations.btn_save,
-              onPressed: onSave,
-              color: AppColors.contentColorBlue,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onSave,
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [primaryColor, secondaryColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.4),
+                        blurRadius: 12,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.save_rounded,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        appLocalization.localizations.btn_save,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
+          SizedBox(width: 5),
+          // Camera button commented out as in original
           // Expanded(
           //   child: CustomButton(
           //     icon: Icons.camera_enhance,
