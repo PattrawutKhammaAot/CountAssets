@@ -104,7 +104,7 @@ class _ExportPageState extends State<ExportPage> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
-                          color: Colors.blue,
+                          color: Color.fromARGB(255, 21, 101, 192),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
@@ -151,13 +151,16 @@ class _ExportPageState extends State<ExportPage> {
                                                       "${appLocalization.localizations.ov_plan}",
                                                   valueRangePointer:
                                                       item[index].sum_asset,
-                                                  colorText: Colors.blue,
-                                                  color: Colors.blue,
+                                                  colorText: Color.fromARGB(
+                                                      255, 21, 101, 192),
+                                                  color: Color.fromARGB(
+                                                      255, 21, 101, 192),
                                                   allItem:
                                                       item[index].sum_asset,
                                                   icon: Icon(
                                                     Icons.assignment,
-                                                    color: Colors.blue,
+                                                    color: Color.fromARGB(
+                                                        255, 21, 101, 192),
                                                   ),
                                                 ),
                                               ),
@@ -188,13 +191,16 @@ class _ExportPageState extends State<ExportPage> {
                                                       "${appLocalization.localizations.ov_images}",
                                                   valueRangePointer:
                                                       item[index].image,
-                                                  colorText: Colors.blue,
-                                                  color: Colors.blue,
+                                                  colorText: Color.fromARGB(
+                                                      255, 21, 101, 192),
+                                                  color: Color.fromARGB(
+                                                      255, 21, 101, 192),
                                                   allItem:
                                                       item[index].sum_asset,
                                                   icon: Icon(
                                                     Icons.image,
-                                                    color: Colors.blue,
+                                                    color: Color.fromARGB(
+                                                        255, 21, 101, 192),
                                                   ),
                                                 ),
                                               ),
@@ -229,13 +235,16 @@ class _ExportPageState extends State<ExportPage> {
                                                       "${appLocalization.localizations.ov_counted}",
                                                   valueRangePointer:
                                                       item[index].check,
-                                                  colorText: Colors.blue,
-                                                  color: Colors.blue,
+                                                  colorText: Color.fromARGB(
+                                                      255, 21, 101, 192),
+                                                  color: Color.fromARGB(
+                                                      255, 21, 101, 192),
                                                   allItem:
                                                       item[index].sum_asset,
                                                   icon: Icon(
                                                     Icons.check,
-                                                    color: Colors.blue,
+                                                    color: Color.fromARGB(
+                                                        255, 21, 101, 192),
                                                   ),
                                                 ),
                                               ),
@@ -264,15 +273,18 @@ class _ExportPageState extends State<ExportPage> {
                                                 child: CustomRangePoint(
                                                   text:
                                                       "${appLocalization.localizations.ov_not_counted}",
-                                                  colorText: Colors.blue,
+                                                  colorText: Color.fromARGB(
+                                                      255, 21, 101, 192),
                                                   valueRangePointer:
                                                       item[index].uncheck,
-                                                  color: Colors.blue,
+                                                  color: Color.fromARGB(
+                                                      255, 21, 101, 192),
                                                   allItem:
                                                       item[index].sum_asset,
                                                   icon: Icon(
                                                     Icons.cancel,
-                                                    color: Colors.blue,
+                                                    color: Color.fromARGB(
+                                                        255, 21, 101, 192),
                                                   ),
                                                 ),
                                               ),

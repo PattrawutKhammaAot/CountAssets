@@ -35,14 +35,19 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     buildNumber: 'Unknown',
   );
 
-  // Define a consistent color palette
-  final Color primaryColor = Color(0xFF2E7D32); // Deep green
-  final Color secondaryColor = Color(0xFF81C784); // Light green
-  final Color accentColor = Color(0xFFFFD54F); // Amber accent
-  final Color backgroundColor = Color(0xFFF5F5F5); // Light background
+  // Elegant Soft Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3); // Soft vibrant blue
+  final Color primaryLightColor = Color(0xFF42A5F5); // Light blue
+  final Color secondaryColor = Color(0xFF64B5F6); // Lighter blue
+  final Color accentColor = Color(0xFF00BCD4); // Cyan accent
+  final Color backgroundColor = Color(0xFFF5F9FF); // Very light blue background
   final Color cardColor = Colors.white;
-  final Color textColor = Color(0xFF333333);
-  final Color subtitleColor = Color(0xFF757575);
+  final Color textColor = Color(0xFF1565C0); // Rich blue text
+  final Color subtitleColor =
+      Color(0xFF90CAF9); // Soft light blue for subtitles
+  final Color gradientStart = Color(0xFF64B5F6); // Start with light blue
+  final Color gradientMiddle = Color(0xFF42A5F5); // Medium blue
+  final Color gradientEnd = Color(0xFFBBDEFB); // End with very light blue
 
   @override
   void initState() {
@@ -100,17 +105,10 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
         exit(0);
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                primaryColor,
-                primaryColor.withOpacity(0.8),
-                secondaryColor,
-              ],
-            ),
+            color: Colors.white,
           ),
           child: SafeArea(
             child: Column(
@@ -118,17 +116,9 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                 _buildAppBar(),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 24),
-                    child: Column(
-                      children: [
-                        // _buildWelcomeSection(),
-                        const SizedBox(height: 24),
-                        Expanded(
-                          child: _buildMenuGrid(),
-                        ),
-                      ],
-                    ),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: _buildMenuGrid(),
                   ),
                 ),
                 _buildFooter(),
@@ -141,68 +131,101 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   }
 
   Widget _buildAppBar() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Container(
+      margin: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: primaryColor.withOpacity(0.2), width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: primaryColor.withOpacity(0.1),
+            blurRadius: 15,
+            spreadRadius: 1,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: cardColor,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+          Flexible(
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: primaryColor.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: primaryColor.withOpacity(0.3),
+                      width: 1.5,
                     ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Count Assets',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black26,
-                        offset: const Offset(0, 2),
-                        blurRadius: 4,
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, secondaryColor],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.inventory_2_rounded,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Count Assets',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                          letterSpacing: 0.3,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-            ],
+              ],
+            ),
           ),
           Container(
             decoration: BoxDecoration(
-              color: cardColor,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              gradient: LinearGradient(
+                colors: [
+                  accentColor.withOpacity(0.2),
+                  secondaryColor.withOpacity(0.2)
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(15),
+              border:
+                  Border.all(color: accentColor.withOpacity(0.3), width: 1.5),
             ),
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(15),
                 onTap: _changeLanguage,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Row(
                     children: [
-                      Icon(Icons.language, color: primaryColor),
-                      const SizedBox(width: 4),
+                      Icon(Icons.language_rounded,
+                          color: primaryColor, size: 22),
+                      const SizedBox(width: 6),
                       Text(
                         Provider.of<LocaleNotifier>(context)
                             .locale
@@ -211,6 +234,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -224,86 +248,33 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildWelcomeSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Welcome to AMS Express', // Fixed hardcoded string
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            Provider.of<LocaleNotifier>(context).locale.languageCode == 'en'
-                ? 'Please select an option below'
-                : 'กรุณาเลือกตัวเลือกด้านล่าง', // Added both languages
-            style: TextStyle(
-              fontSize: 16,
-              color: subtitleColor,
-            ),
-          ),
-          const SizedBox(height: 12),
-          AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              return Container(
-                height: 5,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [secondaryColor, primaryColor],
-                    stops: [0, _animationController.value],
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildMenuGrid() {
-    // Create a coordinated color palette for menu items
+    // Modern blue gradient color schemes for menu items
     final List<Map<String, dynamic>> menuColorSchemes = [
       {
+        'bgColor': Color(0xFFE3F2FD), // Light blue
+        'iconColor': Color(0xFF1976D2), // Blue
+        'gradientColors': [Color(0xFF64B5F6), Color(0xFF42A5F5)],
+      },
+      {
         'bgColor': Color(0xFFE0F7FA), // Cyan light
-        'iconColor': Color(0xFF00ACC1), // Cyan
+        'iconColor': Color(0xFF0097A7), // Cyan
+        'gradientColors': [Color(0xFF4DD0E1), Color(0xFF00BCD4)],
       },
       {
-        'bgColor': Color(0xFFF1F8E9), // Light green light
-        'iconColor': Color(0xFF7CB342), // Light green
-      },
-      {
-        'bgColor': Color(0xFFFFF8E1), // Amber light
-        'iconColor': Color(0xFFFFB300), // Amber
+        'bgColor': Color(0xFFE8EAF6), // Indigo light
+        'iconColor': Color(0xFF3949AB), // Indigo
+        'gradientColors': [Color(0xFF7986CB), Color(0xFF5C6BC0)],
       },
     ];
 
     return GridView(
+      physics: const BouncingScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.0,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+        childAspectRatio: 0.95,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
       children: [
         _buildMenuItem(
@@ -312,6 +283,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           onTap: () => Navigator.pushNamed(context, Routes.import),
           color: menuColorSchemes[0]['bgColor'],
           iconColor: menuColorSchemes[0]['iconColor'],
+          gradientColors: menuColorSchemes[0]['gradientColors'],
         ),
         _buildMenuItem(
           title: appLocalization.localizations.menu_count,
@@ -319,6 +291,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           onTap: () => Navigator.pushNamed(context, Routes.select_plan),
           color: menuColorSchemes[1]['bgColor'],
           iconColor: menuColorSchemes[1]['iconColor'],
+          gradientColors: menuColorSchemes[1]['gradientColors'],
         ),
         _buildMenuItem(
           title: appLocalization.localizations.menu_report,
@@ -326,16 +299,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           onTap: () => Navigator.pushNamed(context, Routes.report),
           color: menuColorSchemes[2]['bgColor'],
           iconColor: menuColorSchemes[2]['iconColor'],
+          gradientColors: menuColorSchemes[2]['gradientColors'],
         ),
-        // _buildMenuItem(
-        //   title: 'Storage',
-        //   lottiePath: 'assets/lotties/storage.json',
-        //   onTap: () {
-        //     // Add your action or new route here
-        //   },
-        //   color: Colors.green.shade100,
-        //   iconColor: Colors.green.shade700,
-        // ),
       ],
     );
   }
@@ -346,94 +311,104 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     required VoidCallback onTap,
     required Color color,
     required Color iconColor,
+    required List<Color> gradientColors,
   }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: cardColor,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: const Offset(0, 4),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: iconColor.withOpacity(0.3),
+            blurRadius: 15,
+            spreadRadius: 0,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(25),
+          child: Container(
+            decoration: BoxDecoration(
+              color: cardColor,
+              borderRadius: BorderRadius.circular(25),
+              border: Border.all(
+                color: color.withOpacity(0.3),
+                width: 1,
+              ),
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Stack(
-            children: [
-              // Positioned(
-              //   right: -20,
-              //   bottom: -20,
-              //   child: Container(
-              //     height: 100,
-              //     width: 100,
-              //     decoration: BoxDecoration(
-              //       color: color,
-              //       shape: BoxShape.circle,
-              //     ),
-              //   ),
-              // ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Stack(
+                children: [
+                  // Gradient background accent
+                  Positioned(
+                    right: -30,
+                    bottom: -30,
+                    child: Container(
+                      height: 120,
+                      width: 120,
                       decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      height: 60,
-                      width: 60,
-                      child: Lottie.asset(
-                        lottiePath,
-                        repeat: true,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 16,
-                          color: iconColor,
+                        gradient: LinearGradient(
+                          colors: [
+                            color.withOpacity(0.3),
+                            color.withOpacity(0.1),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                        const SizedBox(width: 4),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: gradientColors,
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: [
+                              BoxShadow(
+                                color: iconColor.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          height: 65,
+                          width: 65,
+                          child: Lottie.asset(
+                            lottiePath,
+                            repeat: true,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const Spacer(),
                         Text(
-                          Provider.of<LocaleNotifier>(context)
-                                      .locale
-                                      .languageCode ==
-                                  'en'
-                              ? 'Tap to access'
-                              : 'แตะเพื่อเข้าถึง', // Added both languages
+                          title,
                           style: TextStyle(
-                            fontSize: 12,
-                            color: subtitleColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: textColor,
+                            letterSpacing: 0.3,
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -443,21 +418,57 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   Widget _buildFooter() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       decoration: BoxDecoration(
-        color: cardColor.withOpacity(0.9),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+        gradient: LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.95),
+            Colors.white.withOpacity(0.9),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: primaryColor.withOpacity(0.2),
+            blurRadius: 15,
+            offset: const Offset(0, -4),
+          ),
+        ],
       ),
-      child: Text(
-        "Version $appVersion",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: subtitleColor,
-          fontWeight: FontWeight.w500,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [primaryColor, secondaryColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              Icons.info_outline_rounded,
+              color: Colors.white,
+              size: 16,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            "Version $appVersion",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
       ),
     );
   }

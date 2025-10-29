@@ -1,6 +1,3 @@
-import 'package:ams_express/component/custom_range_pointer.dart';
-import 'package:ams_express/component/textformfield/custom_input.dart';
-import 'package:ams_express/extension/color_extension.dart';
 import 'package:ams_express/main.dart';
 import 'package:ams_express/model/count/ViewSumStatusModel.dart';
 import 'package:ams_express/model/count/viewListCount.dart';
@@ -8,9 +5,6 @@ import 'package:ams_express/routes.dart';
 import 'package:ams_express/services/database/count_db.dart';
 import 'package:ams_express/services/database/import_db.dart';
 import 'package:flutter/material.dart';
-
-import '../../component/label.dart';
-import '../../model/importModel/view_Import_Model.dart';
 
 class ListPlanPage extends StatefulWidget {
   const ListPlanPage({super.key});
@@ -22,6 +16,14 @@ class ListPlanPage extends StatefulWidget {
 class _ListPlanPageState extends State<ListPlanPage> {
   ViewSumStatusModel itemSum = ViewSumStatusModel();
   List<ViewListCountModel> itemPlan = [];
+
+  // Modern Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3);
+  final Color secondaryColor = Color(0xFF64B5F6);
+  final Color accentColor = Color(0xFF00BCD4);
+  final Color cardColor = Colors.white;
+  final Color greenColor = Color(0xFF4CAF50);
+  final Color redColor = Color(0xFFEF5350);
 
   @override
   void initState() {
@@ -35,6 +37,14 @@ class _ListPlanPageState extends State<ListPlanPage> {
         itemPlan = value;
       });
     });
+    // itemPlan = [
+    //   ViewListCountModel(
+    //       plan: "Plan A", createdDate: "2024-01-01", statusPlan: "Open"),
+    //   ViewListCountModel(
+    //       plan: "Plan B", createdDate: "2024-02-01", statusPlan: "Closed"),
+    //   ViewListCountModel(
+    //       plan: "Plan C", createdDate: "2024-03-01", statusPlan: "Open"),
+    // ];
     // TODO: implement initState
     super.initState();
   }
@@ -42,117 +52,164 @@ class _ListPlanPageState extends State<ListPlanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: colorPrimary,
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.green.shade500,
-          elevation: 10,
+          elevation: 0,
           centerTitle: true,
           iconTheme: IconThemeData(
-            color: Colors.white, // Change this to your desired color
+            color: Colors.white,
           ),
           title: Text(
             appLocalization.localizations.listplan_title,
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.white,
+                letterSpacing: 0.5),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [primaryColor, secondaryColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
           ),
         ),
         body: Column(
           children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  elevation: 5,
-                  shape: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        itemSum.uncheck != null
-                            ? Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomRangePoint(
-                                        color: Colors.red,
-                                        valueRangePointer: itemSum.uncheck,
-                                        allItem: itemSum.allitem,
-                                        text: appLocalization
-                                            .localizations.listplan_uncheked,
-                                        colorText: AppColors.contentColorBlue,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : CircularProgressIndicator(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Column(
-                            children: [
-                              Label(
-                                appLocalization.localizations.listplan_total,
-                                color: AppColors.contentColorBlue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              Label(
-                                "${itemSum.allitem}",
-                                color: AppColors.contentColorBlue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ],
-                          ),
-                        ),
-                        itemSum.checked != null
-                            ? Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomRangePoint(
-                                        color: Colors.white,
-                                        valueRangePointer: itemSum.checked,
-                                        colorText: AppColors.contentColorBlue,
-                                        allItem: itemSum.allitem,
-                                        text: appLocalization
-                                            .localizations.listplan_checked,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : CircularProgressIndicator()
-                      ],
+            Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              decoration: BoxDecoration(
+                color: cardColor,
+                borderRadius: BorderRadius.circular(20),
+                border:
+                    Border.all(color: primaryColor.withOpacity(0.2), width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryColor.withOpacity(0.1),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: _buildStatusCard(
+                      icon: Icons.cancel_rounded,
+                      label: appLocalization.localizations.listplan_uncheked,
+                      value: itemSum.uncheck ?? 0,
+                      total: itemSum.allitem ?? 0,
+                      color: redColor,
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [primaryColor, secondaryColor],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: primaryColor.withOpacity(0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            appLocalization.localizations.listplan_total,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            "${itemSum.allitem ?? 0}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildStatusCard(
+                      icon: Icons.check_circle_rounded,
+                      label: appLocalization.localizations.listplan_checked,
+                      value: itemSum.checked ?? 0,
+                      total: itemSum.allitem ?? 0,
+                      color: greenColor,
+                    ),
+                  )
+                ],
               ),
             ),
             Expanded(
-              flex: 4,
               child: Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12))),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                ),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: primaryColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              Icons.list_alt_rounded,
+                              color: primaryColor,
+                              size: 20,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Text(
+                            'Plan List',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: ListView.builder(
                           itemCount: itemPlan.length,
+                          physics: BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return itemPlan.isNotEmpty
                                 ? GestureDetector(
@@ -176,98 +233,184 @@ class _ListPlanPageState extends State<ListPlanPage> {
                                       });
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        elevation: 15,
-                                        color: Colors.white,
-                                        shape: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 12),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: cardColor,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          border: Border.all(
                                             color: itemPlan[index].statusPlan ==
                                                     "Open"
-                                                ? Colors.green
-                                                : AppColors.contentColorCyan,
+                                                ? greenColor.withOpacity(0.3)
+                                                : primaryColor.withOpacity(0.3),
+                                            width: 2,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  (itemPlan[index].statusPlan ==
+                                                              "Open"
+                                                          ? greenColor
+                                                          : primaryColor)
+                                                      .withOpacity(0.1),
+                                              blurRadius: 10,
+                                              spreadRadius: 0,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
                                         ),
                                         child: Stack(
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      "${appLocalization.localizations.listplan_plan} : ${itemPlan[index].plan}"),
-                                                ),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Padding(
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Container(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                            "${appLocalization.localizations.listplan_created} : ${itemPlan[index].createdDate}"),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Container(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.3,
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                              horizontal: 21,
-                                                              vertical: 7,
-                                                            ),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: itemPlan[index]
+                                                            EdgeInsets.all(8),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: (itemPlan[index]
                                                                           .statusPlan ==
                                                                       "Open"
-                                                                  ? Colors.green
-                                                                  : AppColors
-                                                                      .contentColorBlue,
-                                                              borderRadius: const BorderRadius
-                                                                  .only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          12),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          14)),
-                                                            ),
-                                                            child: Text(
-                                                              "${itemPlan[index].statusPlan}",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            )),
+                                                                  ? greenColor
+                                                                  : primaryColor)
+                                                              .withOpacity(0.1),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.folder_rounded,
+                                                          color: itemPlan[index]
+                                                                      .statusPlan ==
+                                                                  "Open"
+                                                              ? greenColor
+                                                              : primaryColor,
+                                                          size: 20,
+                                                        ),
                                                       ),
-                                                    ]),
-                                              ],
+                                                      SizedBox(width: 12),
+                                                      Expanded(
+                                                        child: Text(
+                                                          "${itemPlan[index].plan}",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: itemPlan[index]
+                                                                        .statusPlan ==
+                                                                    "Open"
+                                                                ? greenColor
+                                                                : primaryColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 12),
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .calendar_today_rounded,
+                                                        size: 14,
+                                                        color: Colors
+                                                            .grey.shade600,
+                                                      ),
+                                                      SizedBox(width: 6),
+                                                      Text(
+                                                        "${itemPlan[index].createdDate}",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors
+                                                              .grey.shade700,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: 0,
+                                              top: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: itemPlan[index]
+                                                                .statusPlan ==
+                                                            "Open"
+                                                        ? [
+                                                            greenColor,
+                                                            Color(0xFF66BB6A)
+                                                          ]
+                                                        : [
+                                                            primaryColor,
+                                                            secondaryColor
+                                                          ],
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(15),
+                                                    bottomLeft:
+                                                        Radius.circular(12),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                  vertical: 8,
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      itemPlan[
+                                                                      index]
+                                                                  .statusPlan ==
+                                                              "Open"
+                                                          ? Icons
+                                                              .lock_open_rounded
+                                                          : Icons.lock_rounded,
+                                                      color: Colors.white,
+                                                      size: 14,
+                                                    ),
+                                                    SizedBox(width: 4),
+                                                    Text(
+                                                      "${itemPlan[index].statusPlan}",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
                                     ),
                                   )
-                                : CircularProgressIndicator();
+                                : Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          primaryColor),
+                                    ),
+                                  );
                           },
                         ),
                       ),
@@ -278,5 +421,60 @@ class _ListPlanPageState extends State<ListPlanPage> {
             ),
           ],
         ));
+  }
+
+  Widget _buildStatusCard({
+    required IconData icon,
+    required String label,
+    required int value,
+    required int total,
+    required Color color,
+  }) {
+    double percentage = total > 0 ? (value / total) * 100 : 0;
+
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: color,
+            size: 28,
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          '$value',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+        SizedBox(height: 4),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 11,
+            color: Colors.grey.shade600,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(height: 4),
+        Text(
+          '${percentage.toStringAsFixed(0)}%',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: color.withOpacity(0.8),
+          ),
+        ),
+      ],
+    );
   }
 }

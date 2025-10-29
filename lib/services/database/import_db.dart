@@ -93,7 +93,7 @@ class ImportDB {
           maskType: EasyLoadingMaskType.black);
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['xlsx', 'xls'],
+        allowedExtensions: ['xlsx'],
       );
 
       if (result != null) {

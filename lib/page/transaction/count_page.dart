@@ -1,9 +1,7 @@
 import 'package:ams_express/component/custom_alertdialog.dart';
 import 'package:ams_express/component/custom_botToast.dart';
 import 'package:ams_express/component/custom_camera.dart';
-import 'package:ams_express/component/custombutton.dart';
 import 'package:ams_express/component/textformfield/custom_input.dart';
-import 'package:ams_express/extension/color_extension.dart';
 import 'package:ams_express/main.dart';
 import 'package:ams_express/model/count/countModelEvent.dart';
 import 'package:ams_express/model/count/responseCountModel.dart';
@@ -15,7 +13,6 @@ import 'package:ams_express/services/database/gallery_db.dart';
 import 'package:ams_express/services/database/location_db.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class CountPage extends StatefulWidget {
   @override
@@ -52,6 +49,14 @@ class _CountPageState extends State<CountPage> {
   FocusNode _remarkFocus = FocusNode();
   FocusNode _checkFocus = FocusNode();
   FocusNode _scanDateFocus = FocusNode();
+
+  // Modern Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3);
+  final Color secondaryColor = Color(0xFF64B5F6);
+  final Color accentColor = Color(0xFF00BCD4);
+  final Color cardColor = Colors.white;
+  final Color greenColor = Color(0xFF4CAF50);
+  final Color redColor = Color(0xFFEF5350);
 
   @override
   void initState() {
@@ -130,17 +135,47 @@ class _CountPageState extends State<CountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        backgroundColor: Colors.green.shade500,
-        iconTheme: IconThemeData(
-          color: Colors.white, // Change this to your desired color
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.assignment_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Count Plan : ${plan ?? ""}',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ],
         ),
-        title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Count Plan : ${plan}',
-              style: TextStyle(color: Colors.white),
-            )),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryColor, secondaryColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -150,20 +185,31 @@ class _CountPageState extends State<CountPage> {
               key: formKeyList[1],
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.green.shade500,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(50),
-                    bottomLeft: Radius.circular(50),
+                  gradient: LinearGradient(
+                    colors: [primaryColor, secondaryColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryColor.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       dropdownLocation(validator: (value) {
                         return null;
                       }),
-                      SizedBox(height: 10),
+                      SizedBox(height: 15),
                       dropdownDepartment(validator: (value) {
                         return null;
                       }),
@@ -174,10 +220,14 @@ class _CountPageState extends State<CountPage> {
               ),
             ),
             Card(
-              shadowColor: Colors.black,
-              elevation: 10,
+              margin: EdgeInsets.all(16),
+              elevation: 8,
+              shadowColor: primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     Custominput(
@@ -268,7 +318,7 @@ class _CountPageState extends State<CountPage> {
                         ),
                         Expanded(
                             child: Custominput(
-                              contentPadding: const EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 0),
                                 focusNode: _capDateFocus,
                                 labelText: "Cap Date",
@@ -353,32 +403,65 @@ class _CountPageState extends State<CountPage> {
       {String? Function(String?)? validator, FocusNode? focus}) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField2(
         validator: validator,
         focusNode: focus,
         autofocus: true,
         isExpanded: true,
-        hint: Text(
-          "Select Location",
-          textAlign: TextAlign.center,
+        hint: Row(
+          children: [
+            Icon(Icons.location_on_rounded, color: primaryColor, size: 20),
+            SizedBox(width: 8),
+            Text(
+              "Select Location",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
           ),
+          filled: true,
+          fillColor: Colors.white,
         ),
         items: location
             .map((LocationModel item) => DropdownMenuItem<String>(
                   value: item.location,
-                  child: Text(
-                    "Location : ${item.location!}",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      Icon(Icons.location_on_rounded,
+                          color: primaryColor, size: 18),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          "Location : ${item.location!}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ))
             .toList(),
@@ -395,17 +478,19 @@ class _CountPageState extends State<CountPage> {
         buttonStyleData: const ButtonStyleData(
           padding: EdgeInsets.only(right: 8),
         ),
-        iconStyleData: const IconStyleData(
+        iconStyleData: IconStyleData(
           icon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
+            Icons.arrow_drop_down_rounded,
+            color: primaryColor,
           ),
-          iconSize: 24,
+          iconSize: 28,
         ),
         dropdownStyleData: DropdownStyleData(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
           ),
+          elevation: 8,
         ),
         menuItemStyleData: const MenuItemStyleData(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -418,32 +503,65 @@ class _CountPageState extends State<CountPage> {
       {String? Function(String?)? validator, FocusNode? focus}) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField2(
         focusNode: focus,
         validator: validator,
         autofocus: true,
         isExpanded: true,
-        hint: Text(
-          "Select Department",
-          textAlign: TextAlign.center,
+        hint: Row(
+          children: [
+            Icon(Icons.business_rounded, color: primaryColor, size: 20),
+            SizedBox(width: 8),
+            Text(
+              "Select Department",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
           ),
+          filled: true,
+          fillColor: Colors.white,
         ),
         items: department
             .map((DepartmentModel item) => DropdownMenuItem<String>(
                   value: item.department,
-                  child: Text(
-                    "Department : ${item.department!}",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      Icon(Icons.business_rounded,
+                          color: primaryColor, size: 18),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          "Department : ${item.department!}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ))
             .toList(),
@@ -462,17 +580,19 @@ class _CountPageState extends State<CountPage> {
         buttonStyleData: const ButtonStyleData(
           padding: EdgeInsets.only(right: 8),
         ),
-        iconStyleData: const IconStyleData(
+        iconStyleData: IconStyleData(
           icon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
+            Icons.arrow_drop_down_rounded,
+            color: primaryColor,
           ),
-          iconSize: 24,
+          iconSize: 28,
         ),
         dropdownStyleData: DropdownStyleData(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
           ),
+          elevation: 8,
         ),
         menuItemStyleData: const MenuItemStyleData(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -496,24 +616,64 @@ class _CountPageState extends State<CountPage> {
       focusNode: focus,
       isExpanded: true,
       decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          label: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Select Status"),
-          )),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide:
+              BorderSide(color: primaryColor.withOpacity(0.3), width: 1.5),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: primaryColor, width: 2),
+        ),
+        label: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.info_outline_rounded, color: primaryColor, size: 18),
+            SizedBox(width: 8),
+            Text(
+              "Select Status",
+              style: TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
       items: itemStatus
           .map((String item) => DropdownMenuItem<String>(
                 value: item,
-                child: Text(
-                  " ${item}",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: item == 'ปกติ'
+                            ? greenColor
+                            : item == 'ทรัพย์สินสุญหาย'
+                                ? redColor
+                                : Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ))
           .toList(),
@@ -527,17 +687,19 @@ class _CountPageState extends State<CountPage> {
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
-      iconStyleData: const IconStyleData(
+      iconStyleData: IconStyleData(
         icon: Icon(
-          Icons.arrow_drop_down,
-          color: Colors.black45,
+          Icons.arrow_drop_down_rounded,
+          color: primaryColor,
         ),
-        iconSize: 24,
+        iconSize: 28,
       ),
       dropdownStyleData: DropdownStyleData(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
         ),
+        elevation: 8,
       ),
       menuItemStyleData: const MenuItemStyleData(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -550,17 +712,56 @@ class _CountPageState extends State<CountPage> {
     dynamic Function()? onCamera,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: CustomButton(
-              icon: Icons.save,
-              text: appLocalization.localizations.btn_save,
-              onPressed: onSave,
-              color: AppColors.contentColorBlue,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onSave,
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [primaryColor, secondaryColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.4),
+                        blurRadius: 12,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.save_rounded,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        appLocalization.localizations.btn_save,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],

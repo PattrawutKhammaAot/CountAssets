@@ -11,7 +11,7 @@ class SettingPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromARGB(255, 21, 101, 192),
         title: Text(
           appLocalization.localizations.setting_title,
           style: TextStyle(color: Colors.white),
@@ -61,7 +61,8 @@ class SettingPage extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.photo_library, color: Colors.blue),
+              leading: Icon(Icons.photo_library,
+                  color: Color.fromARGB(255, 21, 101, 192)),
               title:
                   Text(appLocalization.localizations.setting_btn_clear_image),
               onTap: () {
@@ -100,7 +101,8 @@ class SettingPage extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.photo_album, color: Colors.blue),
+              leading: Icon(Icons.photo_album,
+                  color: Color.fromARGB(255, 21, 101, 192)),
               title: Text(appLocalization.localizations.settings_path),
               onTap: () async {
                 final selectValue = await StorageManager.getDrive();

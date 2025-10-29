@@ -1,4 +1,3 @@
-import 'package:ams_express/extension/color_extension.dart';
 import 'package:ams_express/routes.dart';
 import 'package:ams_express/services/database/import_db.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +15,27 @@ class ImportPage extends StatefulWidget {
 class _ImportPageState extends State<ImportPage> {
   List<ViewImportModel> itemPlan = [];
   bool _isLoading = false;
+
+  // Modern Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3);
+  final Color secondaryColor = Color(0xFF64B5F6);
+  final Color accentColor = Color(0xFF00BCD4);
+  final Color cardColor = Colors.white;
+
   @override
   void initState() {
+    // itemPlan = [
+    //   ViewImportModel(
+    //       plan: "Sample Plan", createdDate: "2024-01-01", qtyAssets: "10"),
+    //   ViewImportModel(
+    //       plan: "Test Plan", createdDate: "2024-02-15", qtyAssets: "25"),
+    //   ViewImportModel(
+    //       plan: "Demo Plan1", createdDate: "2024-03-10", qtyAssets: "15"),
+    //   ViewImportModel(
+    //       plan: "Demo Plan2", createdDate: "2024-04-05", qtyAssets: "30"),
+    //   ViewImportModel(
+    //       plan: "Demo Plan3", createdDate: "2024-05-20", qtyAssets: "20"),
+    // ];
     ImportDB().selectPlan().then((value) {
       setState(() {
         itemPlan = value;
@@ -32,15 +50,30 @@ class _ImportPageState extends State<ImportPage> {
     return PopScope(
       canPop: _isLoading ? false : true,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Colors.white, // Change this to your desired color
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          title: Text(
+            'Import Page',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
             ),
-            title: Text(
-              'Import Page',
-              style: TextStyle(color: AppColors.mainTextColor1),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [primaryColor, secondaryColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
-            backgroundColor: Colors.green.shade500),
+          ),
+        ),
         body: RefreshIndicator(
           onRefresh: () {
             return ImportDB().selectPlan().then((value) {
@@ -51,30 +84,86 @@ class _ImportPageState extends State<ImportPage> {
           },
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                      color: primaryColor.withOpacity(0.2), width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryColor.withOpacity(0.1),
+                      blurRadius: 15,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
                 child: Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                           style: ButtonStyle(
-                              backgroundColor:
-                                  WidgetStatePropertyAll(Colors.red)),
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.red.shade400),
+                            foregroundColor:
+                                WidgetStatePropertyAll(Colors.white),
+                            elevation: WidgetStatePropertyAll(0),
+                            padding: WidgetStatePropertyAll(
+                              EdgeInsets.symmetric(
+                                  vertical: 14, horizontal: 16),
+                            ),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.delete_sweep_rounded,
+                            size: 20,
+                            color: Colors.white,
+                          ),
                           onPressed: !_isLoading
                               ? () async {
                                   _showDialogConfirmDelete();
                                 }
                               : null,
-                          child: Text(
+                          label: Text(
                               appLocalization.localizations.import_btn_clearAll,
-                              style: TextStyle(color: Colors.white))),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ))),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 12),
                     Expanded(
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                           style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                  AppColors.contentColorBlue)),
+                            backgroundColor:
+                                WidgetStatePropertyAll(primaryColor),
+                            foregroundColor:
+                                WidgetStatePropertyAll(Colors.white),
+                            elevation: WidgetStatePropertyAll(2),
+                            shadowColor: WidgetStatePropertyAll(
+                                primaryColor.withOpacity(0.3)),
+                            padding: WidgetStatePropertyAll(
+                              EdgeInsets.symmetric(
+                                  vertical: 14, horizontal: 16),
+                            ),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.file_upload_rounded,
+                            size: 20,
+                            color: Colors.white,
+                          ),
                           onPressed: !_isLoading
                               ? () async {
                                   _isLoading = true;
@@ -87,110 +176,238 @@ class _ImportPageState extends State<ImportPage> {
                                   setState(() {});
                                 }
                               : null,
-                          child: Text(
+                          label: Text(
                               appLocalization.localizations.import_btn_import,
-                              style: TextStyle(color: Colors.white))),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ))),
                     ),
                   ],
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                    itemCount: itemPlan.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Slidable(
-                        endActionPane: ActionPane(
-                          motion: BehindMotion(),
-                          children: [
-                            !_isLoading
-                                ? SlidableAction(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 0),
-                                    borderRadius: BorderRadius.circular(12),
-                                    spacing: 2,
-                                    onPressed: (BuildContext context) {
-                                      ImportDB()
-                                          .deleteData(itemPlan[index].plan!)
-                                          .then((e) => ImportDB()
-                                                  .selectPlan()
-                                                  .then((value) {
-                                                setState(() {
-                                                  itemPlan = value;
-                                                });
-                                              }));
-                                    },
-                                    backgroundColor: Colors.red,
-                                    foregroundColor: Colors.white,
-                                    icon: Icons.delete,
-                                    label: "Delete",
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () => Navigator.pushNamed(
-                                context, Routes.view_detail_import,
-                                arguments: itemPlan[index].plan),
-                            child: Card(
-                              shadowColor: AppColors.itemsBackground,
-                              elevation: 8,
-                              color: AppColors.mainTextColor1,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    right: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.contentColorBlue,
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            topRight: Radius.circular(8)),
-                                      ),
-                                      height: 25,
-                                      width: 80,
-                                      child: Text(
-                                        "View",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
-                                      ),
-                                    ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView.builder(
+                      itemCount: itemPlan.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: BehindMotion(),
+                            children: [
+                              !_isLoading
+                                  ? SlidableAction(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 0),
+                                      borderRadius: BorderRadius.circular(16),
+                                      spacing: 2,
+                                      onPressed: (BuildContext context) {
+                                        ImportDB()
+                                            .deleteData(itemPlan[index].plan!)
+                                            .then((e) => ImportDB()
+                                                    .selectPlan()
+                                                    .then((value) {
+                                                  setState(() {
+                                                    itemPlan = value;
+                                                  });
+                                                }));
+                                      },
+                                      backgroundColor: Colors.red.shade400,
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete_rounded,
+                                      label: "Delete",
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                  context, Routes.view_detail_import,
+                                  arguments: itemPlan[index].plan),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: cardColor,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: primaryColor.withOpacity(0.15),
+                                    width: 1,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Plan : ${itemPlan[index].plan}",
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: primaryColor.withOpacity(0.08),
+                                      blurRadius: 10,
+                                      spreadRadius: 0,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      right: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              primaryColor,
+                                              secondaryColor
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(12),
+                                              topRight: Radius.circular(15)),
                                         ),
-                                        SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 6,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Expanded(
-                                              child: Text(
-                                                  "Date : ${itemPlan[index].createdDate}"),
+                                            Icon(
+                                              Icons.visibility_rounded,
+                                              color: Colors.white,
+                                              size: 16,
                                             ),
+                                            SizedBox(width: 4),
                                             Text(
-                                                "Qty Assets : ${itemPlan[index].qtyAssets}"),
+                                              "View",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: primaryColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Icon(
+                                                  Icons.folder_rounded,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              SizedBox(width: 12),
+                                              Expanded(
+                                                child: Text(
+                                                  "${itemPlan[index].plan}",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: primaryColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 12),
+                                          Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: secondaryColor
+                                                  .withOpacity(0.08),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .calendar_today_rounded,
+                                                      size: 14,
+                                                      color: primaryColor
+                                                          .withOpacity(0.7),
+                                                    ),
+                                                    SizedBox(width: 6),
+                                                    Text(
+                                                      "${itemPlan[index].createdDate}",
+                                                      style: TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 4,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        accentColor,
+                                                        secondaryColor
+                                                      ],
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .inventory_2_rounded,
+                                                        size: 14,
+                                                        color: Colors.white,
+                                                      ),
+                                                      SizedBox(width: 4),
+                                                      Text(
+                                                        "${itemPlan[index].qtyAssets}",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                ),
               )
             ],
           ),

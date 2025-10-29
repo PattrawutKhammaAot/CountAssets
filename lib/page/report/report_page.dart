@@ -1,6 +1,4 @@
 import 'package:ams_express/component/custom_dropdown2.dart';
-import 'package:ams_express/component/label.dart';
-import 'package:ams_express/extension/color_extension.dart';
 import 'package:ams_express/main.dart';
 import 'package:ams_express/model/report/viewReportDropdownPlanModel.dart';
 import 'package:ams_express/model/report/viewReportListDataModel.dart';
@@ -9,8 +7,6 @@ import 'package:ams_express/routes.dart';
 import 'package:ams_express/services/database/quickType.dart';
 import 'package:ams_express/services/database/report_db.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../services/database/export_db.dart';
 
@@ -22,7 +18,6 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   List<ViewReportDropdownPlanModel> dropdownPlans = [];
   List<ViewReportListDataModel> dataList = [];
-  List<ViewReportListDataModel> _tempItemList = [];
   String valueselected = '';
   String? previousValue;
   TextEditingController uncheck = TextEditingController(),
@@ -33,6 +28,14 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   int pageSize = 50;
   bool isRefreshing = false;
   String valueViewButtonStatus = '';
+
+  // Modern Blue Color Palette
+  final Color primaryColor = Color(0xFF2196F3);
+  final Color secondaryColor = Color(0xFF64B5F6);
+  final Color accentColor = Color(0xFF00BCD4);
+  final Color cardColor = Colors.white;
+  final Color greenColor = Color(0xFF4CAF50);
+  final Color redColor = Color(0xFFEF5350);
 
   @override
   void initState() {
@@ -88,7 +91,6 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
 
     setState(() {
       dataList.addAll(newItems);
-      _tempItemList = dataList;
       currentPage++;
       isRefreshing = false;
     });
@@ -135,7 +137,6 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
 
     setState(() {
       dataList.addAll(newItems);
-      _tempItemList = dataList;
       currentPage++;
       isLoading = false;
     });
@@ -144,278 +145,538 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.green.shade500,
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Label(
-            appLocalization.localizations.report_title,
+        title: Text(
+          appLocalization.localizations.report_title,
+          style: TextStyle(
             fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            letterSpacing: 0.5,
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryColor, secondaryColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
         ),
         actions: [
           valueselected.isNotEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: GestureDetector(
-                    onTap: () async {
-                      await ExportDB().ExportAllAssetByPlan(valueselected);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 60,
-                      child: Transform.rotate(
-                        angle: 3.14159,
-                        child: Lottie.asset('assets/lotties/export.json',
-                            repeat: true, fit: BoxFit.fill),
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        await ExportDB().ExportAllAssetByPlan(valueselected);
+                      },
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 1.5,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.download_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(width: 6),
+                            Text(
+                              'Export',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 )
-              : SizedBox.fromSize()
+              : SizedBox.shrink()
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              ),
-              _listViewData(),
+          _buildDropdown(onChanged: (value) async {
+            currentPage = 0;
+            pageSize = 50;
+            valueViewButtonStatus = '';
 
-              //CardDropdown
-              _buildDropdown(onChanged: (value) async {
-                currentPage = 0;
-                pageSize = 50;
-                valueViewButtonStatus = '';
+            valueselected = value;
+            uncheck.text = dropdownPlans
+                .where((element) => element.plan == valueselected)
+                .first
+                .sum_Uncheck
+                .toString();
+            checked.text = dropdownPlans
+                .where((element) => element.plan == valueselected)
+                .first
+                .sum_Check
+                .toString();
 
-                valueselected = value;
-                uncheck.text = dropdownPlans
-                    .where((element) => element.plan == valueselected)
-                    .first
-                    .sum_Uncheck
-                    .toString();
-                checked.text = dropdownPlans
-                    .where((element) => element.plan == valueselected)
-                    .first
-                    .sum_Check
-                    .toString();
-
-                dataList.clear();
-                await _fetchListData(valueselected, false);
-                setState(() {});
-              }),
-              SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
+            dataList.clear();
+            await _fetchListData(valueselected, false);
+            setState(() {});
+          }),
+          Expanded(child: _listViewData()),
         ],
       ),
     );
   }
 
   Widget _listViewData() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 100),
-      child: Container(
-          padding: EdgeInsets.all(8),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20), topLeft: Radius.circular(20))),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 90),
-            child: Column(
-              children: [
-                dataList.isNotEmpty
-                    ? Expanded(
-                        child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            controller: _scrollController,
-                            itemCount: dataList.length + (isLoading ? 1 : 0),
-                            itemBuilder: ((context, index) {
-                              if (index == dataList.length) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              return CardCustomReport(
-                                dataList: dataList[index],
-                                onTap: () async {
-                                  await Navigator.pushNamed(
-                                    context,
-                                    Routes.editPage,
-                                    arguments: {
-                                      "plan": valueselected,
-                                      "asset": dataList[index].asset
-                                    },
-                                  ).then((v) async {
-                                    isLoading = false;
-                                    setState(() {});
-                                    await _fetchListData(valueselected, true);
-                                  });
-                                },
-                              );
-                            })))
-                    : const Expanded(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [CircularProgressIndicator()],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.grey.shade50, Colors.white],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Column(
+        children: [
+          dataList.isNotEmpty
+              ? Expanded(
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    controller: _scrollController,
+                    itemCount: dataList.length + (isLoading ? 1 : 0),
+                    itemBuilder: ((context, index) {
+                      if (index == dataList.length) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        primaryColor),
+                                    strokeWidth: 3,
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  'กำลังโหลดข้อมูล...',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      return CardCustomReport(
+                        dataList: dataList[index],
+                        onTap: () async {
+                          await Navigator.pushNamed(
+                            context,
+                            Routes.editPage,
+                            arguments: {
+                              "plan": valueselected,
+                              "asset": dataList[index].asset
+                            },
+                          ).then((v) async {
+                            isLoading = false;
+                            setState(() {});
+                            await _fetchListData(valueselected, true);
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                )
+              : Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: primaryColor.withOpacity(0.1),
+                                blurRadius: 20,
+                                offset: Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.hourglass_empty_rounded,
+                            size: 64,
+                            color: primaryColor.withOpacity(0.5),
                           ),
                         ),
-                      )
-              ],
-            ),
-          )),
+                        SizedBox(height: 24),
+                        Text(
+                          'กำลังโหลดข้อมูล',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(primaryColor),
+                            strokeWidth: 3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+        ],
+      ),
     );
   }
 
   Widget _buildDropdown({dynamic Function(dynamic)? onChanged}) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.green.shade500,
+          gradient: LinearGradient(
+            colors: [primaryColor, secondaryColor],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20))),
-      padding: EdgeInsets.all(8),
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25)),
+          boxShadow: [
+            BoxShadow(
+              color: primaryColor.withOpacity(0.3),
+              blurRadius: 15,
+              offset: Offset(0, 5),
+            ),
+          ]),
+      padding: EdgeInsets.all(16),
       child: Wrap(
         children: [
           Card(
-            shape: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none),
+            elevation: 8,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 8),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   dropdownPlans.isNotEmpty
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                child: SizedBox(
-                                  child: CustomDropdownButton2(
-                                    hintText: appLocalization
-                                        .localizations.report_dropdown,
-                                    items: dropdownPlans.map((item) {
-                                      return DropdownMenuItem<dynamic>(
-                                        value: item.plan,
-                                        child: Text(
-                                          "${item.plan}",
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                          ),
+                      ? Container(
+                          margin: EdgeInsets.only(bottom: 20),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: primaryColor.withOpacity(0.3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.folder_open_rounded,
+                                color: primaryColor,
+                                size: 24,
+                              ),
+                              SizedBox(width: 12),
+                              Expanded(
+                                child: CustomDropdownButton2(
+                                  hintText: appLocalization
+                                      .localizations.report_dropdown,
+                                  items: dropdownPlans.map((item) {
+                                    return DropdownMenuItem<dynamic>(
+                                      value: item.plan,
+                                      child: Text(
+                                        "${item.plan}",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black87,
                                         ),
-                                      );
-                                    }).toList(),
-                                    onChanged: onChanged,
-                                  ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: onChanged,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                       : SizedBox.fromSize(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Label(
-                            "${appLocalization.localizations.report_txt_uncheck} : ",
-                            color: AppColors.contentColorBlue,
-                          ),
-                        ),
+                  // Unchecked Section
+                  Container(
+                    margin: EdgeInsets.only(bottom: 16),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.blue.shade50, Colors.white],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      Expanded(
-                          flex: 2,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            style: TextStyle(fontSize: 26, color: Colors.black),
-                            controller: uncheck,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(4),
-                                filled: true,
-                                fillColor: Colors.transparent),
-                          )),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _viewItem(StatusCheck.status_uncheck),
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: AppColors.contentColorBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            child: Center(
-                                child: Label(appLocalization
-                                    .localizations.report_btn_view_uncheck)),
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: primaryColor.withOpacity(0.2),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: primaryColor.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.pending_actions_rounded,
+                            color: primaryColor,
+                            size: 24,
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                appLocalization
+                                    .localizations.report_txt_uncheck,
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              TextFormField(
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                controller: uncheck,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => _viewItem(StatusCheck.status_uncheck),
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 12),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [primaryColor, secondaryColor],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: primaryColor.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.visibility_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    appLocalization
+                                        .localizations.report_btn_view_uncheck,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Label(
-                            "${appLocalization.localizations.report_txt_check} : ",
-                            color: AppColors.contentColorBlue,
-                          ),
-                        ),
+                  // Checked Section
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.green.shade50, Colors.white],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      Expanded(
-                          flex: 2,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            controller: checked,
-                            style: TextStyle(fontSize: 26),
-                            readOnly: true,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(4),
-                                filled: true,
-                                fillColor: Colors.transparent),
-                          )),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _viewItem(StatusCheck.status_checked),
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: AppColors.contentColorBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            child: Center(
-                                child: Label(appLocalization
-                                    .localizations.report_btn_view_uncheck)),
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: greenColor.withOpacity(0.2),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: greenColor.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.check_circle_rounded,
+                            color: greenColor,
+                            size: 24,
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                appLocalization.localizations.report_txt_check,
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              TextFormField(
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: greenColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                controller: checked,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => _viewItem(StatusCheck.status_checked),
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 12),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [greenColor, Color(0xFF81C784)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: greenColor.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.visibility_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    appLocalization
+                                        .localizations.report_btn_view_uncheck,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

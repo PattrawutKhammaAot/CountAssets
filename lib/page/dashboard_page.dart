@@ -68,7 +68,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       Colors.teal,
       AppColors.contentColorBlue,
       Colors.red,
-      Colors.blue,
+      Color.fromARGB(255, 21, 101, 192),
       Colors.purple,
       Colors.yellow,
       Colors.orange,
